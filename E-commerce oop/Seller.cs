@@ -8,7 +8,7 @@ namespace E_commerce_oop
 {
     internal class Seller:User
     {
-        public Seller(string username,string email, string password ) : base(username,email, password, "seller")
+        public Seller(int id ,string username,string email, string password ) : base(id ,username,email, password, "seller")
         {
         }
     }

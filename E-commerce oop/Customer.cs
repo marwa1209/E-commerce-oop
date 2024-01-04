@@ -8,8 +8,10 @@ namespace E_commerce_oop
 {
     internal class Customer:User
     {
-        public Customer(string username, string email,string password) : base(username, password,email, "customer")
+        public Customer(int id ,string username, string email,string password) : base(id ,username, email, password, "customer")
         {
         }
+
     }
 }
+

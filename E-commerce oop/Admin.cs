@@ -9,19 +9,19 @@ namespace E_commerce_oop
 {
     internal class Admin :User
     {
-        public Admin(string username,string email ,string password) : base(username, email,password, "admin")
+        public Admin(int id ,string username,string email ,string password) : base(id ,username, email,password, "admin")
         {
         }
-        public void AddSeller(List<User> users, string sellerUsername,string selleremail, string sellerPassword)
+        public void AddSeller(List<User> users,int sellerId, string sellerUsername,string selleremail, string sellerPassword)
         {
             
-            if (users.Exists(u => u.Username == sellerUsername))
+            if (users.Exists(u => u.Email == selleremail))
             {
                 Console.WriteLine("Seller already exists.");
                 return;
             }
 
-            User seller = new Seller(sellerUsername, selleremail, sellerPassword);
+            User seller = new Seller(sellerId ,sellerUsername, selleremail, sellerPassword);
             users.Add(seller);
 
             Console.WriteLine($"Seller {sellerUsername} added to the system.");
@@ -36,17 +36,17 @@ namespace E_commerce_oop
 
             foreach (User user in users)
             {
-                if (user is Seller && user.Email == sellerEmail)
+                if (user.Role=="seller" && user.Email == sellerEmail)
                 {
+                   
                     users.Remove(user);
                     sellerToDelete = true;
                     break;
 
                 }
             }
-            if (sellerToDelete )
+            if (sellerToDelete ) 
             {
-                
                 Console.WriteLine($"Seller {sellerEmail} deleted successfully.");
                 string json = JsonConvert.SerializeObject(users, Formatting.Indented);
                 File.WriteAllText("users.json", json);
@@ -59,21 +59,20 @@ namespace E_commerce_oop
 
         public void DeleteCustomer(List<User> users, string customerEmail)
         {
-            User customerToDelete = null;
+            bool customerToDelete = false;
 
             foreach (User user in users)
             {
                 if (user.Role == "customer" && user.Email == customerEmail)
                 {
-                    customerToDelete = user;
+                    users.Remove(user);
+                    customerToDelete = true;
                     break;
                 }
             }
-            if (customerToDelete != null)
+            if (customerToDelete)
             {
-                users.Remove(customerToDelete);
-                Console.WriteLine($"Seller {customerEmail} deleted successfully.");
-
+                Console.WriteLine($"Cusromer {customerEmail} deleted successfully.");
                 string json = JsonConvert.SerializeObject(users, Formatting.Indented);
                 File.WriteAllText("users.json", json);
             }

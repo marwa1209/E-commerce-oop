@@ -24,21 +24,21 @@ namespace E_commerce_oop
             }
         }
 
-        public void RegisterCustomer(string username ,string email,string password)
+        public void RegisterCustomer(int id ,string username ,string email,string password)
         {
-            User customer = new Customer(username,email, password);
+            User customer = new Customer(id ,username,email, password);
             users.Add(customer);
             Console.WriteLine($"Customer {username} registered.");
             string json = JsonConvert.SerializeObject(users, Formatting.Indented);
             File.WriteAllText("users.json", json); // write new  file
         }
-        public void RegisterAdmin(string username,string email, string password)
+        public void RegisterAdmin(int id ,string username,string email, string password)
         {
-            User admin = new Admin(username,email, password);
+            User admin = new Admin(id ,username,email, password);
             users.Add(admin);
             Console.WriteLine($"Admin {username} registered.");
             string json = JsonConvert.SerializeObject(users, Formatting.Indented);
-            File.WriteAllText("users.json", json);
+            File.WriteAllText("users.json", json); // create new file json or replace it with the exist file
         }
         public User Login(string email, string password)
         {
@@ -49,13 +49,13 @@ namespace E_commerce_oop
                 if (u.Email == email && u.Password == password)
                 {
                     user = u;
-                    break; // Break the loop once a matching user is found
+                    break; 
                 }
             }
 
             if (user != null)
             {
-                Console.WriteLine($"{user.Role} login successful. Welcome, {user.Username}!");
+                Console.WriteLine($"{user.Role} login successful. Welcome, {user.Username}");
                 return user;
             }
             else
@@ -64,14 +64,50 @@ namespace E_commerce_oop
                 return null;
             }
         }
+        public User LoginToCheckAccess(string email, string password)
+        {
+            User user = null;
+
+            foreach (User u in users)
+            {
+                if (u.Email == email && u.Password == password)
+                {
+                    if(u.Role == "admin")
+                    {
+                        Console.WriteLine($"{u.Username} you are admin you can to add or delete users. Welcome, ");
+                    }
+                    else if (u.Role == "customer")
+                    {
+                        Console.Write($"{u.Username} you are customer ");
+                    }
+                    else if(u.Role == "seller")
+                    {
+                        Console.Write($"{u.Username} you are seller ");
+                    }
+                    
+                    user = u;
+                    break; 
+                }
+
+            }
+
+            if (user != null)
+            {
+                
+                return user;
+            }
+            else
+            {
+                Console.WriteLine("Invalid credentials. Please try again.");
+                return null;
+            }
+        }
+
         public List<User> GetUsers()
         {
             return users;
         }
-        public bool IsAdmin(User user)
-        {
-            return user is Admin;
-        }
+
 
     }
 }
