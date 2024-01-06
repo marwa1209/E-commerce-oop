@@ -12,6 +12,8 @@ namespace E_commerce_oop
             List<User> users = account.GetUsers();
 
             Store store = new Store();
+            //stack overflow errorrrrrrrr -- even without calling any function 
+            //ShoppingCart cart = new ShoppingCart();
 
             Console.WriteLine("Welcome to Our E-commerce System>>>>>>>>>!");
 
@@ -68,12 +70,11 @@ namespace E_commerce_oop
                                     case "3":
                                         store.ViewProducts();
                                         break;
+
                                     case "4":
                                         Console.WriteLine("Exiting the program.");
                                         return;
-                                    case "5":
-                                        store.ViewProducts();
-                                        break;
+
 
 
                                     default:
