@@ -59,6 +59,7 @@ namespace E_commerce_oop
                                 Console.WriteLine("2. Edit Profile");
                                 Console.WriteLine("3. Add a product to your Cart:");
                                 Console.WriteLine("4. Exit");
+                                Console.WriteLine("5. View the Products");
                                 string choiceCustomer = Console.ReadLine();
 
                                 switch (choiceCustomer)
@@ -81,6 +82,9 @@ namespace E_commerce_oop
                                         break;
 
                                     case "3":
+
+                                        Console.WriteLine("THE STORE PRODUCTS: ");
+                                        store.ViewProducts();
                                         Console.WriteLine("add which product? ");
                                         int ProductNumber = int.Parse(Console.ReadLine());
                                         Console.WriteLine("enter the quantity of the product you want");
@@ -91,6 +95,10 @@ namespace E_commerce_oop
                                     case "4":
                                         Console.WriteLine("Exiting the program.");
                                         return;
+                                    case "5":
+                                        store.ViewProducts();
+                                        break;
+
 
                                     default:
                                         Console.WriteLine("Invalid choice. Please try again.");
