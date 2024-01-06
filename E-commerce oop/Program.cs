@@ -71,6 +71,10 @@ namespace E_commerce_oop
                                     case "4":
                                         Console.WriteLine("Exiting the program.");
                                         return;
+                                    case "5":
+                                        store.ViewProducts();
+                                        break;
+
 
                                     default:
                                         Console.WriteLine("Invalid choice. Please try again.");
