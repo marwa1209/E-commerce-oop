@@ -18,11 +18,7 @@ namespace E_commerce_oop
                 Console.WriteLine("Choose an option:");
                 Console.WriteLine("1. Log In");
                 Console.WriteLine("2. Sign Up (Customer)");
-                Console.WriteLine("3. Sign Up (Admin)");
-                Console.WriteLine("4. Add Seller (Admin)");
-                Console.WriteLine("5. remove Seller (Admin)");
-                Console.WriteLine("6. remove customer (Admin)");
-                Console.WriteLine("7. Exit");
+                Console.WriteLine("3. Exit");
 
                 string choice = Console.ReadLine();
                 switch (choice)
@@ -130,7 +126,10 @@ namespace E_commerce_oop
                                 Console.WriteLine("1. View Profile");
                                 Console.WriteLine("2. Edit Profile");
                                 Console.WriteLine("3. view users");
-                                Console.WriteLine("4. Exit");
+                                Console.WriteLine("4. Add Seller ");
+                                Console.WriteLine("5. remove Seller");
+                                Console.WriteLine("6. remove customer ");
+                                Console.WriteLine("7. Exit");
 
                                 string choiceCustomer = Console.ReadLine();
 
@@ -160,6 +159,72 @@ namespace E_commerce_oop
                                         break;
 
                                     case "4":
+
+                                        if (loggedInCustomer != null && loggedInCustomer.Role == "admin")   //null reference error fix
+                                        {
+                                            loggedInCustomer = new Admin(0, "", "", "");     //to be able to cast
+                                            Admin admin = (Admin)loggedInCustomer;
+                                            Console.Write("Enter seller ID: ");
+                                            int sellerid = int.Parse(Console.ReadLine());
+                                            Console.Write("Enter seller username: ");
+                                            string sellerUsername = Console.ReadLine();
+                                            Console.Write("Enter seller email: ");
+                                            string sellerEmail = Console.ReadLine();
+                                            Console.Write("Enter seller password: ");
+                                            string sellerPassword = Console.ReadLine();
+                                            admin.AddSeller(users, sellerid, sellerUsername, sellerEmail, sellerPassword);
+
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("you can not add seller");
+                                        }
+                                        break;
+                                    case "5":
+
+                                        if (loggedInCustomer.Role == "admin")
+                                        {
+                                            loggedInCustomer = new Admin(0, "", "", "");   //to be able to cast
+                                            Admin admin = (Admin)loggedInCustomer;
+                                            Console.Write("Enter seller email: ");
+                                            string sellerEmail = Console.ReadLine();
+                                            admin.DeleteSeller(users, sellerEmail);
+
+                                        }
+
+                                        else
+                                        {
+                                            Console.WriteLine("you can not delete seller");
+                                        }
+
+
+                                        break;
+                                    case "6":
+                                        Console.Write("Enter admin email: ");
+                                        string loginAdminEmailtodelcustomer = Console.ReadLine();
+                                        Console.Write("Enter admin password: ");
+                                        string loginAdminPasstodelcustomer = Console.ReadLine();
+                                        User loggedInUsertodelcustomer = account.LoginToCheckAccess(loginAdminEmailtodelcustomer, loginAdminPasstodelcustomer);
+
+
+
+                                        if (loggedInCustomer.Role == "admin")
+                                        {
+                                            loggedInCustomer = new Admin(0, "", "", "");   //to be able to cast
+                                            Admin admin = (Admin)loggedInCustomer;
+                                            Console.Write("Enter Customer email: ");
+                                            string customerEmail = Console.ReadLine();
+                                            admin.DeleteCustomer(users, customerEmail);
+
+                                        }
+
+                                        else
+                                        {
+                                            Console.WriteLine("you can not delete customer");
+                                        }
+                                        break;
+
+                                    case "7":
                                         Console.WriteLine("Exiting the program.");
                                         return;
 
@@ -188,95 +253,6 @@ namespace E_commerce_oop
                         break;
 
                     case "3":
-                        Console.Write("Enter  ID: ");
-                        int adminid = int.Parse(Console.ReadLine());
-                        Console.Write("Enter admin username: ");
-                        string adminUsername = Console.ReadLine();
-                        Console.Write("Enter admin email: ");
-                        string adminEmail = Console.ReadLine();
-                        Console.Write("Enter admin password: ");
-                        string adminPassword = Console.ReadLine();
-                        account.RegisterAdmin(adminid,adminUsername, adminEmail, adminPassword);
-                        break;
-
-                    case "4":
-                        Console.Write("Enter admin email: ");
-                        string loginAdminEmail = Console.ReadLine();
-                        Console.Write("Enter admin password: ");
-                        string loginAdminPass = Console.ReadLine();
-                        User loggedInUser = account.LoginToCheckAccess(loginAdminEmail, loginAdminPass);
-
-                        if (loggedInUser != null &&loggedInUser.Role == "admin")   //null reference error fix
-                        {
-                            loggedInUser = new Admin(0, loginAdminEmail, "", loginAdminPass);     //to be able to cast
-                            Admin admin = (Admin)loggedInUser;
-                            Console.Write("Enter new ID: ");
-                            int sellerid = int.Parse(Console.ReadLine());
-                            Console.Write("Enter seller username: ");
-                            string sellerUsername = Console.ReadLine();
-                            Console.Write("Enter seller email: ");
-                            string sellerEmail = Console.ReadLine();
-                            Console.Write("Enter seller password: ");
-                            string sellerPassword = Console.ReadLine();
-                            admin.AddSeller(users, sellerid, sellerUsername, sellerEmail, sellerPassword);
-
-                        }
-                        else
-                        {
-                            Console.WriteLine("you can not add seller");
-                        }
-                        break;
-                    case "5":
-                        Console.Write("Enter admin email: ");
-                        string loginAdminEmailtodel = Console.ReadLine();
-                        Console.Write("Enter admin password: ");
-                        string loginAdminPasstodel = Console.ReadLine();
-                        User loggedInUsertodel = account.LoginToCheckAccess(loginAdminEmailtodel, loginAdminPasstodel);
-                        
-
-
-                        if (loggedInUsertodel.Role == "admin")
-                        {
-                            loggedInUsertodel = new Admin(0, loginAdminEmailtodel, "", loginAdminPasstodel);   //to be able to cast
-                            Admin admin = (Admin)loggedInUsertodel;
-                            Console.Write("Enter seller email: ");
-                            string sellerEmail = Console.ReadLine();
-                            admin.DeleteSeller(users, sellerEmail);
-
-                        }
-
-                        else
-                        {
-                            Console.WriteLine("you can not delete seller");
-                        }
-
-
-                        break;
-                    case "6":
-                        Console.Write("Enter admin email: ");
-                        string loginAdminEmailtodelcustomer = Console.ReadLine();
-                        Console.Write("Enter admin password: ");
-                        string loginAdminPasstodelcustomer = Console.ReadLine();
-                        User loggedInUsertodelcustomer = account.LoginToCheckAccess(loginAdminEmailtodelcustomer, loginAdminPasstodelcustomer);
-                       
-
-
-                        if (loggedInUsertodelcustomer.Role == "admin")
-                        {
-                            loggedInUsertodelcustomer = new Admin(0, loginAdminEmailtodelcustomer, "", loginAdminPasstodelcustomer);   //to be able to cast
-                            Admin admin = (Admin)loggedInUsertodelcustomer;
-                            Console.Write("Enter Customer email: ");
-                            string customerEmail = Console.ReadLine();
-                            admin.DeleteCustomer(users, customerEmail);
-
-                        }
-
-                        else
-                        {
-                            Console.WriteLine("you can not delete customer");
-                        }
-                        break;
-                    case "7":
                         Console.WriteLine("Exiting the program.");
                         return;
 
