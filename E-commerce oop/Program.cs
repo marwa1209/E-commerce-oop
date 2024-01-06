@@ -13,7 +13,12 @@ namespace E_commerce_oop
 
             //get the product list
             Store store = new Store();
+
+            //return shop
             List<Product> AllProducts = store.GetProducts();
+            //print the shop list to access the products
+
+
 
             ShoppingCart shoppingCart = new ShoppingCart();
 
@@ -141,6 +146,11 @@ namespace E_commerce_oop
                                         Console.WriteLine("enter product description: ");
                                         string description = Console.ReadLine();
                                         store.AddProduct(Inputid, name, price, stock, description);
+                                        //test only
+                                        for (int i = 0; i < AllProducts.Length; i++)
+                                        {
+                                            Console.WriteLine("product number  " + i + "  " + AllProducts[i]);
+                                        }
                                         break;
                                     case "4":
 

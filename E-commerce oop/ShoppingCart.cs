@@ -16,6 +16,7 @@ namespace E_commerce_oop
 
         //List of shopping carts of the customers
         private List<ShoppingCart> ShoppingCarts = new List<ShoppingCart>();
+
         public ShoppingCart()
         {
             if (File.Exists("ShoppingList.json"))
@@ -34,19 +35,26 @@ namespace E_commerce_oop
         {
             ShoppingCart foundCart = null;
 
-            foreach (var cart in ShoppingCarts)
+            foreach (ShoppingCart cart in ShoppingCarts)
             {
                 if (cart.CustomerId == InputCustomerID)
                 {
                     foundCart = cart;
                     Console.WriteLine("You have a cart");
 
-                    var searchItem = foundCart.Items.Find(item => item.Product.ProductID == AllProducts[ProductNumber].ProductID);
+                    CartItem searchItem = foundCart.Items.Find(item => item.Product.ProductID == AllProducts[ProductNumber].ProductID);
                     if (searchItem != null)
                     {
+                        //update cart quantity 
+                        searchItem.Quantity = searchItem.Quantity + quantity;
                         Console.WriteLine($"You have the product. Current quantity: {searchItem.Quantity}");
-                        searchItem.Quantity += quantity;
+
+                        //update product stock
+                        Console.WriteLine("before stock :" + AllProducts[ProductNumber].Stock);
                         AllProducts[ProductNumber].Stock = AllProducts[ProductNumber].Stock - quantity;
+                        Console.WriteLine("now stock :" + AllProducts[ProductNumber].Stock);
+
+                        //update the products list..
                         string p = JsonConvert.SerializeObject(AllProducts, Formatting.Indented);
                         File.WriteAllText("AllProducts.json", p);
 
@@ -72,7 +80,8 @@ namespace E_commerce_oop
                 foundCart.Items.Add(new CartItem(AllProducts[ProductNumber], quantity));
                 ShoppingCarts.Add(foundCart);
             }
-
+            //test
+            Console.WriteLine(foundCart);
             string json = JsonConvert.SerializeObject(ShoppingCarts, Formatting.Indented);
             File.WriteAllText("ShoppingCarts.json", json);
 
