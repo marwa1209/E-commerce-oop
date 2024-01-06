@@ -19,14 +19,16 @@ namespace E_commerce_oop
 
         public ShoppingCart()
         {
+            ShoppingCarts = new List<ShoppingCart>();
+        }
+
+
+        public void LoadDataFromFile()
+        {
             if (File.Exists("ShoppingList.json"))
             {
                 string json = File.ReadAllText("ShoppingList.json");
                 ShoppingCarts = JsonConvert.DeserializeObject<List<ShoppingCart>>(json);
-            }
-            else
-            {
-                ShoppingCarts = new List<ShoppingCart>();
             }
         }
 

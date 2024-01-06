@@ -13,8 +13,8 @@ namespace E_commerce_oop
 
 
             Store store = new Store();
-            //stack overflow errorrrrrrrr -- even without calling any function 
-            //ShoppingCart cart = new ShoppingCart();
+            //stack overflow errorrrrrrrr -- even without calling any function "error solveeeeeeeeeeedddddd"
+            ShoppingCart cart = new ShoppingCart();
 
             Console.WriteLine("Welcome to Our E-commerce System>>>>>>>>>!");
 
