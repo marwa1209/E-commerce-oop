@@ -93,7 +93,8 @@ namespace E_commerce_oop
                                 Console.WriteLine("1. View Profile");
                                 Console.WriteLine("2. Edit Profile");
                                 Console.WriteLine("3. View All Products");
-                                Console.WriteLine("4. Exit");
+                                Console.WriteLine("4. Add a new product");
+                                Console.WriteLine("5. Exit");
 
                                 string choiceCustomer = Console.ReadLine();
 
@@ -118,8 +119,22 @@ namespace E_commerce_oop
                                     case "3":
                                         store.ViewProducts();
                                         break;
-
                                     case "4":
+
+                                        Console.WriteLine("enter product id: ");
+                                        string Inputid = Console.ReadLine();
+                                        Console.WriteLine("enter product name: ");
+                                        string name = Console.ReadLine();
+                                        Console.WriteLine("enter price: ");
+                                        string price = Console.ReadLine();
+                                        Console.WriteLine("enter stock quantity: ");
+                                        string stock = Console.ReadLine();
+                                        Console.WriteLine("enter product description: ");
+                                        string description = Console.ReadLine();
+                                        store.AddProduct(Inputid, name, price, stock, description);
+                                        store.ViewProducts();
+                                        break;
+                                    case "5":
                                         Console.WriteLine("Exiting the program.");
                                         return;
 
