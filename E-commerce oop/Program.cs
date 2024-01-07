@@ -13,8 +13,8 @@ namespace E_commerce_oop
 
 
             Store store = new Store();
-            //stack overflow errorrrrrrrr -- even without calling any function "error solveeeeeeeeeeedddddd"
-            ShoppingCart cart = new ShoppingCart();
+
+            ShoppingCart shoppingcart = new ShoppingCart();
 
             Console.WriteLine("Welcome to Our E-commerce System>>>>>>>>>!");
 
@@ -39,13 +39,16 @@ namespace E_commerce_oop
                             loggedInUserCustomer = new Customer(0, loginUseremail, "", loginPassword);
                             Customer loggedInCustomer = (Customer)loggedInUserCustomer;
 
+
                             while (true)
                             {
                                 Console.WriteLine("Choose an option:");
                                 Console.WriteLine("1. View Profile");
                                 Console.WriteLine("2. Edit Profile");
                                 Console.WriteLine("3. View All Products");
-                                Console.WriteLine("4. Exit");
+                                Console.WriteLine("4. View My Cart");
+                                Console.WriteLine("5. Add To My Cart:");
+                                Console.WriteLine("6. Exit");
 
                                 string choiceCustomer = Console.ReadLine();
 
@@ -73,6 +76,25 @@ namespace E_commerce_oop
                                         break;
 
                                     case "4":
+                                        shoppingcart.ReturnCart(loggedInUserCustomer.Id);
+                                        break;
+
+                                    case "5":
+                                        store.ViewProducts();
+
+
+                                        Console.WriteLine("Enter the Product ID: ");
+                                        int PNum = int.Parse(Console.ReadLine());
+                                        Console.WriteLine("Enter This quantity you want: ");
+                                        int quantity = int.Parse(Console.ReadLine());
+
+                                        shoppingcart.AddProductToCart(loggedInUserCustomer.Id, PNum, quantity);
+
+                                        shoppingcart.ReturnCart(loggedInUserCustomer.Id);
+
+
+                                        break;
+                                    case "6":
                                         Console.WriteLine("Exiting the program.");
                                         return;
 

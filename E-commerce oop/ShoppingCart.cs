@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Runtime.Intrinsics.Arm;
 using System.Text;
@@ -14,85 +15,140 @@ namespace E_commerce_oop
 
         public List<CartItem> Items = new List<CartItem>();
 
-        //List of shopping carts of the customers
+
         private List<ShoppingCart> ShoppingCarts = new List<ShoppingCart>();
 
-        public ShoppingCart()
-        {
-            ShoppingCarts = new List<ShoppingCart>();
-        }
 
 
-        public void LoadDataFromFile()
+
+        //view customer cart
+        public ShoppingCart ReturnCart(int customerId)
         {
             if (File.Exists("ShoppingList.json"))
             {
                 string json = File.ReadAllText("ShoppingList.json");
-                ShoppingCarts = JsonConvert.DeserializeObject<List<ShoppingCart>>(json);
+                var list = JsonConvert.DeserializeObject<List<ShoppingCart>>(json);
+                foreach (var item in list)
+                {
+                    if (item.CustomerId == customerId)
+                    {
+                        Items = item.Items;
+                        ShoppingCart customeCart = new ShoppingCart();
+                        customeCart = item;
+                        Console.WriteLine($"You have a {customeCart.Items.Count} Products in your cart");
+
+                        foreach (var c in customeCart.Items)
+
+                        {
+                            Console.WriteLine($"  you have  quantity {c.Quantity} piece of product {c.Product.ProductName} and the product id is {c.Product.ProductID}");
+                        }
+                        return customeCart;
+
+                    }
+                }
+                return null;
+
             }
+            else return null;
         }
 
 
-        //public void AddProductToCart(int InputCustomerID, int ProductNumber, int quantity, List<Product> AllProducts)
-        //{
-        //    ShoppingCart foundCart = null;
 
-        //    foreach (ShoppingCart cart in ShoppingCarts)
-        //    {
-        //        if (cart.CustomerId == InputCustomerID)
-        //        {
-        //            foundCart = cart;
-        //            Console.WriteLine("You have a cart");
-
-        //            CartItem searchItem = foundCart.Items.Find(item => item.Product.ProductID == AllProducts[ProductNumber].ProductID);
-        //            if (searchItem != null)
-        //            {
-        //                //update cart quantity 
-        //                searchItem.Quantity = searchItem.Quantity + quantity;
-        //                Console.WriteLine($"You have the product. Current quantity: {searchItem.Quantity}");
-
-        //                //update product stock
-        //                Console.WriteLine("before stock :" + AllProducts[ProductNumber].Stock);
-        //                AllProducts[ProductNumber].Stock = AllProducts[ProductNumber].Stock - quantity;
-        //                Console.WriteLine("now stock :" + AllProducts[ProductNumber].Stock);
-
-        //                //update the products list..
-        //                string p = JsonConvert.SerializeObject(AllProducts, Formatting.Indented);
-        //                File.WriteAllText("AllProducts.json", p);
-
-        //                Console.WriteLine($"You updated the quantity in your cart to: {searchItem.Quantity}");
-        //            }
-        //            else
-        //            {
-        //                Console.WriteLine("Product not found in your cart. Adding a new item.");
-        //                foundCart.Items.Add(new CartItem(AllProducts[ProductNumber], quantity));
-        //            }
-
-        //            break; // Found the desired cart, exit the loop
-        //        }
-        //    }
-
-        //    // If the cart is not found, create a new cart
-        //    if (foundCart == null)
-        //    {
-        //        Console.WriteLine("You don't have a cart. Creating a new cart.");
-
-        //        foundCart = new ShoppingCart();
-        //        foundCart.CustomerId = InputCustomerID;
-        //        foundCart.Items.Add(new CartItem(AllProducts[ProductNumber], quantity));
-        //        ShoppingCarts.Add(foundCart);
-        //    }
-        //    //test
-        //    Console.WriteLine(foundCart);
-        //    string json = JsonConvert.SerializeObject(ShoppingCarts, Formatting.Indented);
-        //    File.WriteAllText("ShoppingList.json", json);
-
-        //}
-
-        public List<ShoppingCart> GetCarts()
+        //add product to cart
+        public void AddProductToCart(int InputcustomerId, int ProductNumber, int quantity)
         {
-            return ShoppingCarts;
+            //read all product data
+            string data = System.IO.File.ReadAllText("Products.json");
+            var allproducts = JsonConvert.DeserializeObject<List<Product>>(data);
+            //read shopping carts data
+            string json = File.ReadAllText("ShoppingList.json");
+            var list = JsonConvert.DeserializeObject<List<ShoppingCart>>(json);
+
+            ShoppingCart foundCart = list.FirstOrDefault(cart => cart.CustomerId == InputcustomerId);
+
+
+
+            if (foundCart != null)
+            {
+                Console.WriteLine("you have a cart");
+                Console.WriteLine("---------------------------");
+                foreach (var item in foundCart.Items)
+                {
+                    if (item.Product.ProductID == ProductNumber)
+                    {
+                        Console.WriteLine(item.Quantity);
+                        Console.WriteLine("you have this product");
+                        item.Quantity += quantity;
+                        Console.WriteLine(item.Quantity);
+
+                        string cartsJson = JsonConvert.SerializeObject(list, Formatting.Indented);
+                        File.WriteAllText("ShoppingList.json", cartsJson);
+
+
+                        return;
+                    }
+
+                }
+                Console.WriteLine("you don't have this product");
+                foreach (var item in foundCart.Items)
+                {
+
+                    Product foundProduct = null;
+
+                    foreach (var p in allproducts)
+                    {
+                        if (p.ProductID == ProductNumber)
+                        {
+                            foundProduct = p;
+                            break;
+                        }
+                    }
+                    CartItem newItem = new CartItem(foundProduct, quantity);
+                    foundCart.Items.Add(newItem);
+
+
+                    Console.WriteLine("you added prouct: " + item.Product.ProductName + "quantity " + item.Quantity);
+
+                    string cartsJson = JsonConvert.SerializeObject(list, Formatting.Indented);
+                    File.WriteAllText("ShoppingList.json", cartsJson);
+
+                    break;
+                }
+                Console.WriteLine("you had a cart ---------------");
+            }
+            else
+            {
+                Product searchProduct = null;
+
+                foreach (var p in allproducts)
+                {
+                    if (p.ProductID == ProductNumber)
+                    {
+                        searchProduct = p;
+                        break;
+                    }
+                }
+
+
+                ShoppingCart NewCart = new ShoppingCart();
+                CartItem NewCartItem = new CartItem(searchProduct, quantity);
+                NewCart.Items.Add(NewCartItem);
+                NewCart.CustomerId = InputcustomerId;
+                list.Add(NewCart);
+
+
+                string f = JsonConvert.SerializeObject(list, Formatting.Indented);
+                File.WriteAllText("ShoppingList.json", f);
+
+
+
+            }
+            Console.WriteLine("----------------------------------");
+
         }
+
+
+
 
 
     }

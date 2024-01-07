@@ -98,16 +98,13 @@ namespace E_commerce_oop
         }
 
 
-
-
-
         public void ViewProducts()
         {
             string data = System.IO.File.ReadAllText("Products.json");
             Product[] STORE = JsonConvert.DeserializeObject<Product[]>(data);
             for (int i = 0; i < STORE.Length; i++)
             {
-                Console.WriteLine("product number  " + i + "  " + STORE[i]);
+                Console.WriteLine(STORE[i]);
             }
         }
 
