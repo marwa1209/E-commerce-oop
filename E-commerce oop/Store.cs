@@ -25,12 +25,12 @@ namespace E_commerce_oop
 
         }
 
-        public void ViewProducts(List<Product> shop)
+        public  void ViewProducts(List<Product> shop)
         {
             {
                 foreach (var item in shop)
                 {
-                    Console.WriteLine($"product id => {item.ProductID} product Name => {item.ProductName} product price => {item.Price} product Quantity => {item.Quantity} product Description =>{item.Description} {item.SellerName}");
+                    Console.WriteLine($"product id => {item.ProductID} product Name => {item.ProductName} product price => {item.Price} product Quantity => {item.Quantity} product Description =>{item.Description} added by {item.SellerName}");
                     Console.WriteLine("");
 
                 }
