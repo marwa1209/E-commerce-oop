@@ -110,55 +110,53 @@ namespace E_commerce_oop
                 Console.WriteLine($"product with id {InputId}  not found.");
             }
         }
-        public void EditProduct(List<Product> shop, int InputId, string name, int price, int stock, string description)
+
+        public void EditProduct(List<Product> shop, int InputId, string seller)
         {
-            Product currentProduct = null;
 
-             foreach (Product product in shop)
+
+
+
+            foreach (var productUpdate in shop)
             {
-                if (product.ProductID == InputId)
-                { currentProduct = product;
-                    shop.Remove(currentProduct);
-                    break; }
-            }
-
-
-                int newStock = stock;
-                string newName = name;
-                int newPrice = price;
-                string newDescription = description;
-                Product newProduct = new Product(InputId, newName, newPrice, newStock, newDescription, this.Username);
-                shop.Add(newProduct);
-                Console.WriteLine($"Product with ID {InputId} updated successfully.");
-                string json = JsonConvert.SerializeObject(shop, Formatting.Indented);
-                File.WriteAllText("Products.json", json);
-            
-
-        }
-        public void EditProfile(List<User> users, int newid, string newUsername, string newEmail, string newPassword)
-        {
-            User currentUser = null;
-
-            foreach (User user in users)
-            {
-                if (user.Username == Username)
+                if (productUpdate.ProductID == InputId && productUpdate.SellerName == seller)
                 {
-                    currentUser = user;
-                    users.Remove(currentUser);
-                    break;
+                    Console.WriteLine("NOW YOU CAN UPDATE THE PRODUCT!!");
 
+                    Console.Write("Enter product new name: ");
+                    string newproductName = Console.ReadLine();
+                    Console.Write("Enter product new price: ");
+                    int newproductPrice = int.Parse(Console.ReadLine());
+                    Console.Write("Enter product new quantity: ");
+                    int newproductstock = int.Parse(Console.ReadLine());
+                    Console.Write("Enter product new description: ");
+                    string newproductdesc = Console.ReadLine();
+
+                    productUpdate.ProductName = newproductName;
+                    productUpdate.SellerName = seller;
+                    productUpdate.Price = newproductPrice;
+                    productUpdate.Description = newproductdesc;
+                    productUpdate.Quantity = newproductstock;
+
+                    string updatedShop = JsonConvert.SerializeObject(shop, Formatting.Indented);
+                    File.WriteAllText("Products.json", updatedShop);
+
+
+                    foreach (var item in shop)
+                    {
+                        if (item.SellerName == seller)
+                        {
+                            Console.WriteLine(item);
+                        }
+                    }
+
+
+                    return;
                 }
+
+
             }
-
-            Username = newUsername;
-            Password = newPassword;
-            Email = newEmail;
-            User newuser = new User(newid, newUsername, newEmail, newPassword, Role);
-
-            users.Add(newuser);
-            Console.WriteLine("Customer Profile updated successfully!");
-            string json = JsonConvert.SerializeObject(users, Formatting.Indented);
-            File.WriteAllText("users.json", json);
+            Console.WriteLine("this product not found or you're not privileged to update it");
         }
     }
 }

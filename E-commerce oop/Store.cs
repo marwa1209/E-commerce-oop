@@ -25,15 +25,31 @@ namespace E_commerce_oop
 
         }
 
-        public  void ViewProducts(List<Product> shop)
+        //public  void ViewProducts(List<Product> shop)
+        //{
+        //    {
+        //        foreach (var item in shop)
+        //        {
+        //            Console.WriteLine($"product id => {item.ProductID} product Name => {item.ProductName} product price => {item.Price} product Quantity => {item.Quantity} product Description =>{item.Description} added by {item.SellerName}");
+        //            Console.WriteLine("");
+
+        //        }
+
+        //    }
+        //}
+        public void ViewProducts(List<Product> shop)
         {
             {
-                foreach (var item in shop)
-                {
-                    Console.WriteLine($"product id => {item.ProductID} product Name => {item.ProductName} product price => {item.Price} product Quantity => {item.Quantity} product Description =>{item.Description} added by {item.SellerName}");
-                    Console.WriteLine("");
 
+                Console.WriteLine("ID   | Name        | Price         | Description      | Quantity | Seller Name");
+                Console.WriteLine("--------------------------------------------------------------------------");
+
+
+                foreach (var product in shop)
+                {
+                    Console.WriteLine($"{product.ProductID,-4} | {product.ProductName,-11} | {product.Price,12:C} | {product.Description,-17} | {product.Quantity,-8} | {product.SellerName}");
                 }
+
 
             }
         }
