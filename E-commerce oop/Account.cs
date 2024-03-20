@@ -32,14 +32,7 @@ namespace E_commerce_oop
             string json = JsonConvert.SerializeObject(users, Formatting.Indented);
             File.WriteAllText("users.json", json); // write new  file
         }
-        //public void RegisterAdmin(int id ,string username,string email, string password)
-        //{
-        //    User admin = new Admin(id ,username,email, password);
-        //    users.Add(admin);
-        //    Console.WriteLine($"Admin {username} registered.");
-        //    string json = JsonConvert.SerializeObject(users, Formatting.Indented);
-        //    File.WriteAllText("users.json", json); // create new file json or replace it with the exist file
-        //}
+
         public User Login(string email, string password)
         {
             User user = null;

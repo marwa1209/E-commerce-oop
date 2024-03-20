@@ -24,7 +24,7 @@ namespace E_commerce_oop
         }
         public void ViewProfile()
         {
-            Console.WriteLine($"Id: {Id}");
+            Console.WriteLine($"id is:  {Id}");
             Console.WriteLine($"Username: {Username}");
             Console.WriteLine($"Email: {Email}");
             Console.WriteLine($"Password: {Password}");
