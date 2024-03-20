@@ -1,4 +1,7 @@
-﻿using Newtonsoft.Json;
+
+using System;
+using System.Linq;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
@@ -9,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace E_commerce_oop
 {
+
     internal class ShoppingCart
     {
         public int CustomerId { get; set; }
@@ -146,9 +150,6 @@ namespace E_commerce_oop
             Console.WriteLine("----------------------------------");
 
         }
-
-
-
 
 
     }
