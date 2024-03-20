@@ -13,6 +13,11 @@ namespace E_commerce_oop
             List<Product>products=new List<Product>();
  
 
+
+            Store store = new Store();
+
+            ShoppingCart shoppingcart = new ShoppingCart();
+
             Console.WriteLine("Welcome to Our E-commerce System>>>>>>>>>!");
 
             while (true)
@@ -36,12 +41,16 @@ namespace E_commerce_oop
                             loggedInUserCustomer = new Customer(loggedInUserCustomer.Id, loggedInUserCustomer.Email, loggedInUserCustomer.Username, loggedInUserCustomer.Password); ;
                             Customer loggedInCustomer = (Customer)loggedInUserCustomer;
 
+
                             while (true)
                             {
                                 Console.WriteLine("Choose an option:");
                                 Console.WriteLine("1. View Profile");
                                 Console.WriteLine("2. Edit Profile");
-                                Console.WriteLine("3. Exit");
+                                Console.WriteLine("3. View All Products");
+                                Console.WriteLine("4. View My Cart");
+                                Console.WriteLine("5. Add To My Cart:");
+                                Console.WriteLine("6. Exit");
 
                                 string choiceCustomer = Console.ReadLine();
 
@@ -65,8 +74,33 @@ namespace E_commerce_oop
                                         break;
 
                                     case "3":
+                                        store.ViewProducts();
+                                        break;
+
+                                    case "4":
+                                        shoppingcart.ReturnCart(loggedInUserCustomer.Id);
+                                        break;
+
+                                    case "5":
+                                        store.ViewProducts();
+
+
+                                        Console.WriteLine("Enter the Product ID: ");
+                                        int PNum = int.Parse(Console.ReadLine());
+                                        Console.WriteLine("Enter This quantity you want: ");
+                                        int quantity = int.Parse(Console.ReadLine());
+
+                                        shoppingcart.AddProductToCart(loggedInUserCustomer.Id, PNum, quantity);
+
+                                        shoppingcart.ReturnCart(loggedInUserCustomer.Id);
+
+
+                                        break;
+                                    case "6":
                                         Console.WriteLine("Exiting the program.");
                                         return;
+
+
 
                                     default:
                                         Console.WriteLine("Invalid choice. Please try again.");
@@ -76,7 +110,10 @@ namespace E_commerce_oop
                         }
                         else if (loggedInUserCustomer != null && loggedInUserCustomer.Role == "seller")
                         {
+
                             loggedInUserCustomer = new Seller(loggedInUserCustomer.Id, loggedInUserCustomer.Email, loggedInUserCustomer.Username, loggedInUserCustomer.Password); ;
+                            loggedInUserCustomer = new Seller(0, loginUseremail, "", loginPassword);
+
                             Seller loggedInCustomer = (Seller)loggedInUserCustomer;
 
                             while (true)
@@ -84,8 +121,14 @@ namespace E_commerce_oop
                                 Console.WriteLine("Choose an option:");
                                 Console.WriteLine("1. View Profile");
                                 Console.WriteLine("2. Edit Profile");
+
                                 Console.WriteLine("3. Add Prodct ");
                                 Console.WriteLine("4. Exit");
+
+                                Console.WriteLine("3. View All Products");
+                                Console.WriteLine("4. Add a new product");
+                                Console.WriteLine("5. Exit");
+
 
                                 string choiceCustomer = Console.ReadLine();
 
@@ -108,6 +151,7 @@ namespace E_commerce_oop
 
                                         break;
                                     case "3":
+
                                         Console.Write("Enter Product ID: ");
                                         int Productid = int.Parse(Console.ReadLine());
                                         Console.Write("Enter Product Name: ");
@@ -122,6 +166,26 @@ namespace E_commerce_oop
 
                                         break;
                                     case "4":
+
+                                        store.ViewProducts();
+                                        break;
+                                    case "4":
+
+                                        Console.WriteLine("enter product id: ");
+                                        string Inputid = Console.ReadLine();
+                                        Console.WriteLine("enter product name: ");
+                                        string name = Console.ReadLine();
+                                        Console.WriteLine("enter price: ");
+                                        string price = Console.ReadLine();
+                                        Console.WriteLine("enter stock quantity: ");
+                                        string stock = Console.ReadLine();
+                                        Console.WriteLine("enter product description: ");
+                                        string description = Console.ReadLine();
+                                        store.AddProduct(Inputid, name, price, stock, description);
+                                        store.ViewProducts();
+                                        break;
+                                    case "5":
+
                                         Console.WriteLine("Exiting the program.");
                                         return;
 
@@ -133,7 +197,11 @@ namespace E_commerce_oop
                         }
                         else if (loggedInUserCustomer != null && loggedInUserCustomer.Role == "admin")
                         {
+
                             loggedInUserCustomer = new Admin(loggedInUserCustomer.Id, loggedInUserCustomer.Email, loggedInUserCustomer.Username,loggedInUserCustomer.Password ) ;
+
+                            loggedInUserCustomer = new Admin(0, loginUseremail, "", loginPassword);
+
                             Admin loggedInCustomer = (Admin)loggedInUserCustomer;
 
                             while (true)
@@ -178,7 +246,11 @@ namespace E_commerce_oop
 
                                         if (loggedInCustomer != null && loggedInCustomer.Role == "admin")   //null reference error fix
                                         {
+
                                             loggedInCustomer = new Admin(loggedInCustomer.Id, loggedInUserCustomer.Email, loggedInUserCustomer.Username, loggedInUserCustomer.Password);     //to be able to cast
+
+                                            loggedInCustomer = new Admin(0, "", "", "");     //to be able to cast
+
                                             Admin admin = (Admin)loggedInCustomer;
                                             Console.Write("Enter seller ID: ");
                                             int sellerid = int.Parse(Console.ReadLine());
@@ -200,7 +272,11 @@ namespace E_commerce_oop
 
                                         if (loggedInCustomer.Role == "admin")
                                         {
+
                                             loggedInCustomer = new Admin(loggedInCustomer.Id, loggedInUserCustomer.Email, loggedInUserCustomer.Username, loggedInUserCustomer.Password);   //to be able to cast
+
+                                            loggedInCustomer = new Admin(0, "", "", "");   //to be able to cast
+
                                             Admin admin = (Admin)loggedInCustomer;
                                             Console.Write("Enter seller email: ");
                                             string sellerEmail = Console.ReadLine();
@@ -227,6 +303,9 @@ namespace E_commerce_oop
                                         if (loggedInCustomer.Role == "admin")
                                         {
                                             loggedInCustomer = new Admin(loggedInCustomer.Id, loggedInUserCustomer.Email, loggedInUserCustomer.Username, loggedInUserCustomer.Password);   //to be able to cast
+
+                                            loggedInCustomer = new Admin(0, "", "", "");   //to be able to cast
+
                                             Admin admin = (Admin)loggedInCustomer;
                                             Console.Write("Enter Customer email: ");
                                             string customerEmail = Console.ReadLine();
@@ -282,6 +361,7 @@ namespace E_commerce_oop
                 }
             }
         }
+
 
     }
 }
