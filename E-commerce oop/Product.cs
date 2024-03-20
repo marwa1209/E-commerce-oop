@@ -1,6 +1,7 @@
+
 using System;
 using System.Collections;
-using System.Diagnostics;
+using System.Collections.Generic;
 
 using System.Linq;
 using System.Text;
@@ -22,6 +23,9 @@ namespace E_commerce_oop
         public string Description { get; set; }
 
 
+
+
+        public Product(int productID, string productName, decimal price, int quantity, string description, string sellerName)
         {
             ProductID = productID;
             ProductName = productName;
@@ -32,6 +36,7 @@ namespace E_commerce_oop
             SellerName = sellerName;
         }
 
+
             Stock = stock;
             Description = description;
         }
@@ -41,6 +46,13 @@ namespace E_commerce_oop
             return " product id :  " + ProductID + ", ProductName : " + ProductName + " , price : " + Price + " ,stock :  " + Stock + " ,description :  " + Description;
         }
 
+
+
+=======
+        public override string ToString()
+        {
+            return " product id :  " + ProductID + ", ProductName : " + ProductName + " , price : " + Price + " ,stock :  " + Quantity + " ,description :  " + Description;
+        }
 
 
     }

@@ -31,7 +31,7 @@ namespace E_commerce_oop
             Console.WriteLine($"Role: {Role}");
         }
 
-        public void EditProfile(List<User> users,int newid, string newUsername, string newPassword, string newEmail)
+        public void EditProfile(List<User> users,int newid, string newUsername, string newEmail, string newPassword)
         {
             User currentUser = null;
 
@@ -49,7 +49,7 @@ namespace E_commerce_oop
             Username = newUsername;
             Password = newPassword;
             Email = newEmail;
-            User newuser = new User (newid ,newUsername,newPassword,newEmail,Role);
+            User newuser = new User (newid ,newUsername,newEmail, newPassword, Role);
            
             users.Add(newuser);
             Console.WriteLine("Customer Profile updated successfully!");

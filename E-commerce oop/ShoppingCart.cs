@@ -1,13 +1,16 @@
 
-using System;
 using System.Linq;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Linq;
 using System.Runtime.Intrinsics.Arm;
 using System.Text;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace E_commerce_oop
@@ -21,9 +24,6 @@ namespace E_commerce_oop
 
 
         private List<ShoppingCart> ShoppingCarts = new List<ShoppingCart>();
-
-
-
 
         //view customer cart
         public ShoppingCart ReturnCart(int customerId)
@@ -152,5 +152,12 @@ namespace E_commerce_oop
         }
 
 
+
     }
 }
+
+    }
+
+}
+
+
